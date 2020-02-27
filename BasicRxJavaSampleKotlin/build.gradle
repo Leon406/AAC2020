@@ -1,0 +1,100 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        applicationId "com.example.android.observability"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+//    implementation app_compat
+//    implementation material
+//    // Kotlin
+//    implementation kotlin.stdlib
+
+    implementation quickDep
+    implementation fragment.runtime_ktx
+
+    // Architecture components
+    implementation lifecycle.runtime
+    kapt lifecycle.compiler
+    implementation room.runtime
+    kapt room.compiler
+    implementation room.rx
+
+    // RxJava
+    implementation rx.android
+    implementation rx.java
+
+
+
+    // Dependencies for local unit tests
+    testImplementation junit
+    testImplementation mockito.all
+    testImplementation hamcrest
+    testImplementation arch_core.testing
+//    testImplementation kts.stdlib
+    testImplementation kttest
+
+    // Android Testing Support Library's runner and rules
+    androidTestImplementation atsl.ext_junit
+    androidTestImplementation atsl.runner
+    androidTestImplementation atsl.rules
+    androidTestImplementation room.testing
+    androidTestImplementation arch_core.testing
+
+    // Dependencies for Android unit tests
+    androidTestImplementation junit
+    androidTestImplementation (mockito.core) { exclude group: 'net.bytebuddy' }
+    androidTestImplementation dexmaker
+
+    // Espresso UI Testing
+    androidTestImplementation espresso.core
+    androidTestImplementation espresso.contrib
+    androidTestImplementation espresso.intents
+
+    // Resolve conflicts between main and test APK:
+//    androidTestImplementation annotations
+//    androidTestImplementation app_compat
+//    androidTestImplementation material
+}

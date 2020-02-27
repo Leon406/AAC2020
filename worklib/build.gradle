@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        vectorDrawables {
+            useSupportLibrary true
+        }
+        // Switching to Renderscript support provided by framework.
+        minSdkVersion 18
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+//    implementation kotlin.stdlib
+//    implementation app_compat
+//    implementation cardview
+//    implementation material
+    implementation quickDep
+    implementation supX.constraint
+
+    implementation work.runtime_ktx
+    implementation retrofit.runtime
+    implementation retrofit.gson
+    implementation okhttp_logging_interceptor
+    implementation glide.runtime
+
+    testImplementation junit
+}

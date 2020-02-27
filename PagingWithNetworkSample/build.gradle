@@ -1,0 +1,95 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
+    defaultConfig {
+        applicationId "com.android.example.paging.pagingwithnetwork"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':paginglib')
+
+    kapt room.compiler
+    kapt glide.compiler
+    implementation quickDep
+    implementation supX.constraint
+//    implementation constraint_layout
+//    implementation app_compat
+    implementation fragment.runtime_ktx
+//    implementation recyclerview
+//    implementation cardview
+//    implementation material
+    implementation room.runtime
+    implementation lifecycle.livedata_ktx
+    implementation lifecycle.runtime
+    implementation paging.runtime_ktx
+//    implementation kotlin.stdlib
+    implementation retrofit.runtime
+    implementation retrofit.gson
+    implementation okhttp_logging_interceptor
+    implementation glide.runtime
+
+    // Android Testing Support Library's runner and rules
+    androidTestImplementation atsl.core
+    androidTestImplementation atsl.runner
+    androidTestImplementation atsl.rules
+    androidTestImplementation arch_core.testing
+
+    androidTestImplementation junit
+    androidTestImplementation retrofit.mock
+    androidTestImplementation mockito.core
+    androidTestImplementation mockito.android
+
+    testImplementation junit
+    testImplementation retrofit.mock
+    testImplementation arch_core.testing
+    testImplementation mockito.core
+}

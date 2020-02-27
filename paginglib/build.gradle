@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    kapt room.compiler
+    kapt glide.compiler
+    implementation quickDep
+    implementation supX.constraint
+//    implementation app_compat
+    implementation activity_ktx
+//    implementation recyclerview
+//    implementation cardview
+//    implementation material
+    implementation room.runtime
+    implementation lifecycle.livedata_ktx
+    implementation lifecycle.runtime
+    implementation paging.runtime_ktx
+//    implementation kotlin.stdlib
+    implementation retrofit.runtime
+    implementation retrofit.gson
+    implementation okhttp_logging_interceptor
+    implementation glide.runtime
+}
